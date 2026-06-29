@@ -1,0 +1,862 @@
+/* --------------------------------------------------------------------------
+   Video-matched navbar + hero
+   Loaded after the original stylesheet so this file only changes the top area.
+   -------------------------------------------------------------------------- */
+
+.pse-home .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Navbar */
+.pse-home .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  height: 100px;
+  background: #fff;
+}
+
+.pse-home .site-header__inner {
+  min-height: 100px;
+  justify-content: space-between;
+}
+
+.pse-home .site-header__logo {
+  width: 142px;
+  max-width: 24vw;
+}
+
+.pse-home .header-register {
+  height: 51px;
+  margin-left: auto;
+  border: 2px solid #170c59;
+  color: #170c59;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+}
+
+.pse-home .header-register > span:first-child {
+  width: 51px;
+  height: 47px;
+  color: #fff;
+  background: #29075a;
+  font-size: 20px;
+}
+
+.pse-home .header-register > span:last-child {
+  padding: 0 23px;
+}
+
+.pse-home .header-register:hover,
+.pse-home .header-register:focus-visible {
+  background: #f3e9ff;
+  outline: none;
+}
+
+/* Hero frame */
+.pse-home .hero,
+.pse-home .hero__canvas,
+.pse-home .hero__inner,
+.pse-home .hero__slide {
+  min-height: 620px;
+}
+
+.pse-home .hero {
+  background:
+    radial-gradient(
+      circle at 64% 42%,
+      rgba(125, 50, 165, 0.52) 0,
+      rgba(64, 21, 112, 0.96) 38%,
+      rgba(4, 8, 58, 1) 100%
+    ),
+    linear-gradient(90deg, #050b42 0%, #1d0e62 38%, #53178c 100%);
+}
+
+.pse-home .hero__canvas,
+.pse-home .hero__inner {
+  min-height: 620px;
+}
+
+.pse-home .hero__slide {
+  grid-template-columns: minmax(320px, 0.95fr) minmax(440px, 1.14fr) minmax(
+      320px,
+      0.75fr
+    );
+  column-gap: clamp(28px, 3vw, 58px);
+  align-items: center;
+}
+
+.pse-home .hero__copy {
+  padding: 0 0 0 2px;
+}
+
+.pse-home .hero__title {
+  max-width: 520px;
+  font-size: clamp(43px, 3.15vw, 61px);
+  line-height: 1.08;
+  letter-spacing: -0.038em;
+}
+
+.pse-home .hero__kicker {
+  margin: 15px 0 31px;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+}
+
+/* One rounded place/date card — same as the recording. */
+.pse-home .hero__event-list {
+  width: min(100%, 455px);
+  max-width: 455px;
+  border: 3px solid #ffd083;
+  border-radius: 999px;
+  background: #ffd487;
+  box-shadow: 0 9px 16px rgba(0, 0, 0, 0.22);
+}
+
+.pse-home .hero__event-item {
+  grid-template-columns: 1.08fr 1fr;
+  min-height: 99px;
+  gap: 0;
+  padding: 10px 25px;
+  border: 0;
+}
+
+.pse-home .hero__event-item span + span {
+  padding-left: 20px;
+  border-left: 2px solid rgba(23, 12, 89, 0.48);
+}
+
+.pse-home .hero__event-item strong {
+  font-size: 20px;
+  line-height: 1.16;
+}
+
+.pse-home .hero__event-item small {
+  margin-top: 5px;
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+/* Three independently moving columns. Pause on hover/focus preference is handled below. */
+.pse-home .hero__visual {
+  width: min(100%, 590px);
+  height: 620px;
+  min-height: 620px;
+  padding-top: 0;
+  grid-template-columns: 1fr 1.08fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.pse-home .hero__photo-column--left,
+.pse-home .hero__photo-column--right {
+  height: 620px;
+}
+
+.pse-home .hero__photo-column--middle {
+  height: 620px;
+}
+
+/* ==========================================================
+   HERO PHOTO ANIMATION
+   3 columns scroll UP together:
+   - same start time
+   - same 3-second speed
+   - same upward direction
+   - no delay / no reverse / no hover pause
+   - continuous seamless loop
+   ========================================================== */
+
+.pse-home .hero__photo-column--left .hero__photo-track,
+.pse-home .hero__photo-column--middle .hero__photo-track,
+.pse-home .hero__photo-column--right .hero__photo-track {
+  gap: 24px;
+  animation-name: hero-photos-scroll-up !important;
+  animation-duration: 3s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  animation-direction: normal !important;
+  animation-delay: 0s !important;
+  animation-play-state: running !important;
+  will-change: transform;
+}
+
+/* The photo pairs are duplicated in index.html.
+   Each value is exactly one complete repeated pair + two gaps. */
+.pse-home .hero__photo-column--left .hero__photo-track,
+.pse-home .hero__photo-column--right .hero__photo-track {
+  --hero-loop-distance: 603px; /* 343 + 24 + 212 + 24 */
+}
+
+.pse-home .hero__photo-column--middle .hero__photo-track {
+  --hero-loop-distance: 645px; /* 385 + 24 + 212 + 24 */
+}
+
+/* translateY goes from 0 to a negative value = visual movement UP */
+@keyframes hero-photos-scroll-up {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(calc(-1 * var(--hero-loop-distance)));
+  }
+}
+
+/* Keep moving even when the cursor is over the photos. */
+.pse-home .hero__visual:hover .hero__photo-track,
+.pse-home .hero__visual:focus-within .hero__photo-track {
+  animation-play-state: running !important;
+}
+
+/* Enquiry form */
+.pse-home .hero__form-wrap {
+  width: min(100%, 365px);
+  max-width: 365px;
+  justify-self: end;
+}
+
+.pse-home .hero-form {
+  width: 100%;
+  padding: 30px 26px 23px;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(50, 12, 102, 0.93),
+    rgba(51, 12, 102, 0.86)
+  );
+}
+
+.pse-home .hero-form__title {
+  margin: 0 0 25px;
+  font-size: 29px;
+  line-height: 1.06;
+}
+
+.pse-home .hero-form__field {
+  gap: 0;
+  margin-bottom: 13px;
+}
+
+.pse-home .hero-form__field input,
+.pse-home .hero-form__field select {
+  width: 100%;
+  min-height: 43px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 14px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.pse-home .hero-form__field--grade select {
+  min-height: 84px;
+  padding: 13px 15px;
+  background-position: right 15px top 17px;
+}
+
+.pse-home .hero-form__field input:focus,
+.pse-home .hero-form__field select:focus {
+  outline-color: #ffd487;
+}
+
+.pse-home .hero-form__field input::placeholder,
+.pse-home .hero-form__field select {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.pse-home .hero-form__submit {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 17px;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  background: transparent;
+}
+
+.pse-home .hero-form__submit-icon {
+  display: grid;
+  width: 52px;
+  height: 48px;
+  place-items: center;
+  color: #170c59;
+  background: #fff;
+  font-size: 20px;
+}
+
+.pse-home .hero-form__submit > span:last-child {
+  display: grid;
+  place-items: center;
+  padding-right: 4px;
+  font-size: 12px;
+}
+
+.pse-home .hero-form__submit:hover,
+.pse-home .hero-form__submit:focus-visible {
+  color: #170c59;
+  border-color: #ffd487;
+  background: #ffd487;
+  outline: none;
+}
+
+@media (max-width: 1280px) {
+  .pse-home .hero__slide {
+    grid-template-columns: minmax(290px, 0.95fr) minmax(360px, 1.1fr) minmax(
+        280px,
+        0.78fr
+      );
+    column-gap: 28px;
+  }
+
+  .pse-home .hero__title {
+    font-size: clamp(42px, 3.7vw, 54px);
+  }
+  .pse-home .hero__visual {
+    width: min(100%, 500px);
+    gap: 16px;
+  }
+  .pse-home .hero__event-list {
+    max-width: 395px;
+  }
+  .pse-home .hero__event-item {
+    min-height: 88px;
+    padding-inline: 20px;
+  }
+  .pse-home .hero__event-item strong {
+    font-size: 17px;
+  }
+  .pse-home .hero__event-item small {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 980px) {
+  .pse-home .hero,
+  .pse-home .hero__canvas,
+  .pse-home .hero__inner,
+  .pse-home .hero__slide {
+    min-height: auto;
+  }
+
+  .pse-home .hero__slide {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-top: 44px;
+  }
+
+  .pse-home .hero__visual {
+    height: 560px;
+    min-height: 560px;
+  }
+  .pse-home .hero__photo-column--left,
+  .pse-home .hero__photo-column--right,
+  .pse-home .hero__photo-column--middle {
+    height: 560px;
+  }
+  .pse-home .hero__form-wrap {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin: 0 0 48px;
+  }
+}
+
+@media (max-width: 680px) {
+  .pse-home .site-header,
+  .pse-home .site-header__inner {
+    height: 78px;
+    min-height: 78px;
+  }
+  .pse-home .site-header__logo {
+    width: 78px;
+  }
+  .pse-home .header-register {
+    height: 38px;
+    border-width: 1px;
+    font-size: 9px;
+  }
+  .pse-home .header-register > span:first-child {
+    width: 38px;
+    height: 36px;
+    font-size: 15px;
+  }
+  .pse-home .header-register > span:last-child {
+    padding-inline: 12px;
+  }
+
+  .pse-home .hero__slide {
+    grid-template-columns: 1fr;
+    padding-top: 36px;
+  }
+  .pse-home .hero__copy {
+    padding-bottom: 28px;
+  }
+  .pse-home .hero__title {
+    font-size: clamp(36px, 11vw, 46px);
+  }
+  .pse-home .hero__kicker {
+    margin-bottom: 22px;
+    font-size: 12px;
+  }
+  .pse-home .hero__event-list {
+    width: 100%;
+    max-width: 455px;
+  }
+  .pse-home .hero__event-item {
+    min-height: 78px;
+    padding: 9px 15px;
+  }
+  .pse-home .hero__event-item strong {
+    font-size: 15px;
+  }
+  .pse-home .hero__event-item small {
+    font-size: 10px;
+  }
+  .pse-home .hero__event-item span + span {
+    padding-left: 12px;
+  }
+
+  .pse-home .hero__visual {
+    order: 2;
+    height: 470px;
+    min-height: 470px;
+    margin-inline: auto;
+  }
+  .pse-home .hero__photo-column--left,
+  .pse-home .hero__photo-column--right,
+  .pse-home .hero__photo-column--middle {
+    height: 470px;
+  }
+  .pse-home .hero__photo-column--left .hero__photo-track img:nth-child(odd),
+  .pse-home .hero__photo-column--right .hero__photo-track img:nth-child(odd) {
+    height: 250px;
+  }
+  .pse-home .hero__photo-column--middle .hero__photo-track img:nth-child(odd) {
+    height: 285px;
+  }
+  .pse-home .hero__photo-column .hero__photo-track img:nth-child(even) {
+    height: 165px;
+  }
+  /* The mobile cards are smaller, so the continuous loop distance changes. */
+  .pse-home .hero__photo-column--left .hero__photo-track,
+  .pse-home .hero__photo-column--right .hero__photo-track {
+    --hero-loop-distance: 463px; /* 250 + 24 + 165 + 24 */
+  }
+
+  .pse-home .hero__photo-column--middle .hero__photo-track {
+    --hero-loop-distance: 498px; /* 285 + 24 + 165 + 24 */
+  }
+
+  .pse-home .hero__form-wrap {
+    order: 3;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pse-home .hero__photo-track {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   CSS-ONLY STICKY NAVBAR STATE
+   Top of page: white header.
+   When the sticky navbar reaches the top while scrolling:
+   navy → purple background + Register Now slides into place.
+   No JavaScript required.
+   ========================================================================== */
+
+/* The header itself is the CSS scroll-state container. */
+.pse-home .site-header {
+  height: auto;
+  background: transparent;
+  border-bottom: 0;
+  box-shadow: none;
+  container-type: scroll-state;
+  container-name: pse-header-scroll;
+}
+
+/* Full-width white/dark surface, controlled through the inner child. */
+.pse-home .site-header__inner {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  min-height: 100px;
+  transition: min-height 0.32s ease;
+}
+
+.pse-home .site-header__inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  width: 100vw;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition:
+    background 0.32s ease,
+    border-color 0.32s ease,
+    box-shadow 0.32s ease;
+}
+
+/* Keep header content above the full-width color surface. */
+.pse-home .site-header__brand,
+.pse-home .header-register {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth logo resize when the navbar becomes sticky. */
+.pse-home .site-header__logo {
+  width: 142px;
+  transition: width 0.32s ease;
+}
+
+/* This rule activates only when the sticky header is actually stuck on top. */
+@supports (container-type: scroll-state) {
+  @container pse-header-scroll scroll-state(stuck: top) {
+    .site-header__inner {
+      min-height: 88px;
+    }
+
+    .site-header__inner::before {
+      background: linear-gradient(90deg, #06113d 0%, #13094a 43%, #3a145f 100%);
+      border-bottom-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 24px rgba(5, 5, 42, 0.3);
+    }
+
+    .site-header__logo {
+      width: 88px;
+    }
+
+    /* Register Now enters from slightly above as navbar sticks. */
+    .header-register {
+      animation: pse-register-now-slide-in 0.32s cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+    }
+  }
+}
+
+@keyframes pse-register-now-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile sizes */
+@media (max-width: 680px) {
+  .pse-home .site-header__inner {
+    min-height: 78px;
+  }
+
+  .pse-home .site-header__logo {
+    width: 78px;
+  }
+
+  @supports (container-type: scroll-state) {
+    @container pse-header-scroll scroll-state(stuck: top) {
+      .site-header__inner {
+        min-height: 68px;
+      }
+
+      .site-header__logo {
+        width: 63px;
+      }
+
+      .header-register {
+        animation-duration: 0.28s;
+      }
+    }
+  }
+}
+
+/* ========================================================================== 
+   FINAL HEADER SIZE + SCROLL COLOR MATCH
+   Figma header frame: 1920 × 100.  This block intentionally comes last so
+   the normal and scrolled navbar remain exactly 100px high.
+   ========================================================================== */
+.pse-home .site-header,
+.pse-home .site-header.is-scrolled {
+  height: 100px;
+  min-height: 100px;
+}
+
+.pse-home .site-header__inner,
+.pse-home .site-header.is-scrolled .site-header__inner {
+  min-height: 100px;
+  height: 100px;
+}
+
+/* Header shown at page load: white 100px Figma header. */
+.pse-home .site-header__inner::before {
+  background: #ffffff;
+}
+
+/* Header shown after the visitor scrolls: navy-to-purple reference color. */
+.pse-home .site-header.is-scrolled {
+  background: linear-gradient(90deg, #06113d 0%, #13094a 43%, #3a145f 100%);
+  box-shadow: 0 10px 24px rgba(5, 5, 42, 0.3);
+}
+
+.pse-home .site-header.is-scrolled .site-header__inner::before {
+  background: linear-gradient(90deg, #06113d 0%, #13094a 43%, #3a145f 100%);
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+
+/* The logo follows the 100px header reference instead of shrinking too much. */
+.pse-home .site-header__logo,
+.pse-home .site-header.is-scrolled .site-header__logo {
+  width: 112px;
+  max-width: none;
+  height: auto;
+}
+
+/* Scroll-state CTA: dimensions, typography, and white hover color from design. */
+.pse-home .site-header.is-scrolled .header-register {
+  height: 68px;
+  padding: 0 28px 0 32px;
+  gap: 14px;
+  color: #164a9b;
+  background: #ffffff;
+  border: 0;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 4px 12px rgba(2, 8, 38, 0.12);
+}
+
+.pse-home .site-header.is-scrolled .header-register__icon {
+  display: none;
+}
+
+.pse-home .site-header.is-scrolled .header-register__label {
+  min-height: 0;
+  padding: 0;
+}
+
+.pse-home .site-header.is-scrolled .header-register__arrow {
+  display: inline-flex;
+  padding: 0;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+/* Requested hover color for the Register Now button. */
+.pse-home .site-header.is-scrolled .header-register:hover,
+.pse-home .site-header.is-scrolled .header-register:focus-visible {
+  color: #0e3474;
+  background: #edf3ff;
+  box-shadow: 0 8px 20px rgba(2, 8, 38, 0.22);
+  transform: translateY(-1px);
+}
+
+.pse-home .site-header.is-scrolled .header-register:active {
+  background: #dce9ff;
+  transform: translateY(0);
+}
+
+@media (max-width: 680px) {
+  .pse-home .site-header,
+  .pse-home .site-header.is-scrolled,
+  .pse-home .site-header__inner,
+  .pse-home .site-header.is-scrolled .site-header__inner {
+    height: 78px;
+    min-height: 78px;
+  }
+
+  .pse-home .site-header__logo,
+  .pse-home .site-header.is-scrolled .site-header__logo {
+    width: 76px;
+  }
+
+  .pse-home .site-header.is-scrolled .header-register {
+    height: 48px;
+    padding: 0 16px 0 19px;
+    gap: 8px;
+    border-radius: 7px;
+    font-size: 13px;
+  }
+
+  .pse-home .site-header.is-scrolled .header-register__arrow {
+    font-size: 21px;
+  }
+}
+
+/* ========================================================================== 
+   FINAL NAVBAR TUNING — compact scroll header + floating home logo
+   - Initial view: white 100px bar and logo begins at the bar's top edge,
+     extending into the hero exactly like the supplied reference.
+   - Scrolled view: compact 86px navy–purple bar with a smaller in-bar logo.
+   ========================================================================== */
+
+/* Initial / page-load header: preserve the white Figma bar and put the large
+   logo at the top-left of the bar instead of vertically centering it. */
+.pse-home .site-header {
+  height: 100px;
+  min-height: 100px;
+  overflow: visible;
+  background: #ffffff;
+}
+
+.pse-home .site-header__inner {
+  position: relative;
+  height: 100px;
+  min-height: 100px;
+  overflow: visible;
+}
+
+.pse-home .site-header__brand {
+  align-self: flex-start;
+  margin-top: 3px;
+}
+
+.pse-home .site-header__logo {
+  width: 142px;
+  max-width: none;
+  height: auto;
+}
+
+/* Compact sticky navbar after scrolling. */
+.pse-home .site-header.is-scrolled {
+  height: 86px;
+  min-height: 86px;
+  background: linear-gradient(90deg, #06113d 0%, #13094a 43%, #3a145f 100%);
+  box-shadow: 0 10px 24px rgba(5, 5, 42, 0.3);
+}
+
+.pse-home .site-header.is-scrolled .site-header__inner {
+  height: 86px;
+  min-height: 86px;
+}
+
+.pse-home .site-header.is-scrolled .site-header__brand {
+  align-self: center;
+  margin-top: 0;
+}
+
+.pse-home .site-header.is-scrolled .site-header__logo {
+  width: 92px;
+  max-width: none;
+  height: auto;
+}
+
+/* Match the smaller white scrolled CTA from the Figma reference. */
+.pse-home .site-header.is-scrolled .header-register {
+  height: 54px;
+  padding: 0 20px 0 28px;
+  gap: 12px;
+  border: 0;
+  border-radius: 7px;
+  color: #164a9b;
+  background: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 4px 12px rgba(2, 8, 38, 0.12);
+}
+
+.pse-home .site-header.is-scrolled .header-register__icon {
+  display: none;
+}
+
+.pse-home .site-header.is-scrolled .header-register__label {
+  min-height: 0;
+  padding: 0;
+}
+
+.pse-home .site-header.is-scrolled .header-register__arrow {
+  display: inline-flex;
+  padding: 0;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.pse-home .site-header.is-scrolled .header-register:hover,
+.pse-home .site-header.is-scrolled .header-register:focus-visible {
+  color: #0e3474;
+  background: #edf3ff;
+  box-shadow: 0 8px 20px rgba(2, 8, 38, 0.22);
+  transform: translateY(-1px);
+}
+
+.pse-home .site-header.is-scrolled .header-register:active {
+  background: #dce9ff;
+  transform: translateY(0);
+}
+
+@media (max-width: 680px) {
+  .pse-home .site-header,
+  .pse-home .site-header__inner {
+    height: 78px;
+    min-height: 78px;
+  }
+
+  .pse-home .site-header__brand {
+    margin-top: 2px;
+  }
+
+  .pse-home .site-header__logo {
+    width: 96px;
+  }
+
+  .pse-home .site-header.is-scrolled,
+  .pse-home .site-header.is-scrolled .site-header__inner {
+    height: 72px;
+    min-height: 72px;
+  }
+
+  .pse-home .site-header.is-scrolled .site-header__logo {
+    width: 62px;
+  }
+
+  .pse-home .site-header.is-scrolled .header-register {
+    height: 42px;
+    padding: 0 13px 0 17px;
+    gap: 7px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+
+  .pse-home .site-header.is-scrolled .header-register__arrow {
+    font-size: 20px;
+  }
+}
